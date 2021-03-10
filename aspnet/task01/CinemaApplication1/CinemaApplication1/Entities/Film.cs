@@ -15,6 +15,7 @@ namespace CinemaApplication1.Entities
         public int FilmID { get; set; }
         public int Name { get; set; }
         public DateTime? PublicationDate { get; set; }
+        public decimal Duration { get; set; }
         public string Link { get; set; }
         public virtual ICollection<Janre> Janres { get; set; }
         public virtual ICollection<Country> Countries { get; set; }

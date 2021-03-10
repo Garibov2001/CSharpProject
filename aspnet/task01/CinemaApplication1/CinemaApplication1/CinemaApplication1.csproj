@@ -128,6 +128,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Core\utily.cs" />
     <Compile Include="Entities\CinemaContext.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Film.cs" />
@@ -142,6 +143,10 @@
     <Compile Include="Migrations\202103101256480_relations.cs" />
     <Compile Include="Migrations\202103101256480_relations.designer.cs">
       <DependentUpon>202103101256480_relations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103101550168_duration.cs" />
+    <Compile Include="Migrations\202103101550168_duration.designer.cs">
+      <DependentUpon>202103101550168_duration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -206,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103101256480_relations.resx">
       <DependentUpon>202103101256480_relations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103101550168_duration.resx">
+      <DependentUpon>202103101550168_duration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
