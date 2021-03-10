@@ -26,5 +26,12 @@ namespace CinemaApplication1.Controllers
 
             return View();
         }
+
+        public ActionResult Detail()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
     }
 }
