@@ -1,11 +1,32 @@
-﻿@{
+﻿@using CinemaApplication1.Models
+
+@model  FilmViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
 
-@section styles {
 
-    
+@if (TempData["country_success"] != null)
+{
+    <div class="alert alert-success mt-4" role="alert">
+        <strong>Şəhər</strong> uğurla əlavə edildi.
+    </div>
+}
+
+@if (TempData["film_success"] != null)
+{
+    <div class="alert alert-success mt-4" role="alert">
+        <strong>Film</strong> uğurla əlavə edildi.
+    </div>
+}
+
+@if (TempData["janre_success"] != null)
+{
+    <div class="alert alert-success mt-4" role="alert">
+        <strong>Janr</strong> uğurla əlavə edildi.
+    </div>
 }
 
 
@@ -35,30 +56,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>mdo</td>
-                        <td>mdo</td>
-                        <td><a href="#">Etrafli</a></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>fat</td>
-                        <td>mdo</td>
-                        <td>mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>Larry the Bird</td>
-                        <td>twitter</td>
-                        <td>mdo</td>
-                        <td>mdo</td>
-                        <td>mdo</td>
-                    </tr>
+                    @{
+                        uint row_counter = 1;
+                    }
+
+                    @foreach (var film in Model.Films)
+                    {
+                        <tr>
+                            <th scope="row">@row_counter</th>
+                            <td>@film.Name</td>
+                            <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
+                            <td>@film.Duration</td>
+                            <td><a href="@film.Link" target="_blank">Click</a></td>
+                            <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.FilmID })" >Etrafli</a></td>
+                        </tr>
+
+                        row_counter++;
+                    }
                 </tbody>
             </table>
         </div>
@@ -73,7 +87,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-left">
-                    <form class="row g-3" action="/" method="post">
+                    <form class="row g-3" action="@Url.Action("CreateFilm","Home")" method="post" id="film_add_form">
                         <div class="col-md-6">
                             <label for="id_name" class="form-label">Filmin adı</label>
                             <input type="text" name="Name" class="form-control" id="id_name">
@@ -84,33 +98,35 @@
                         </div>
                         <div class="col-md-12">
                             <label for="id_duration" class="form-label">Filmin müddəti</label>
-                            <input type="range" name="Duration" value="1" class="form-range" id="id_duration" min="0" max="5" step="0.5">
+                            <input type="range" name="Duration" value="1" class="form-range" id="id_duration" min="0" max="5" step="1">
                         </div>
                         <div class="col-md-12">
                             <label for="id_link" class="form-label">Filmin linki</label>
-                            <input type="text" class="form-control" id="id_link">
+                            <input type="text" name="Link" class="form-control" id="id_link">
                         </div>
                         <div class="col-md-6">
-                            <label for="id_countries" class="form-label">Filmin çəkildiyi şəhərlər</label>
-                            <select class="form-select" id="id_countries" multiple>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <label for="id_countries" class="form-label">Filmin çəkildiyi olkelers</label>
+                            <select name="Countries" class="form-select" id="id_countries" multiple>
+                                @foreach (var country in Model.Countries)
+                                {
+                                    <option value="@country.CountryID">@country.Name</option>
+                                }
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="id_janres" class="form-label">Filmin janrları</label>
-                            <select name="" class="form-select" id="id_janres" multiple>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select name="Janres" class="form-select" id="id_janres" multiple>
+                                @foreach (var janre in Model.Janres)
+                                {
+                                    <option value="@janre.JanreID">@janre.Name</option>
+                                }
                             </select>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv et</button>
-                    <button type="button" class="btn btn-primary">Yadda saxla</button>
+                    <button type="submit" form="film_add_form" class="btn btn-primary">Yadda saxla</button>
                 </div>
             </div>
         </div>
@@ -125,7 +141,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-left">
-                    <form class="row g-3" action="/" method="post">
+                    <form class="row g-3" action="@Url.Action("CreateCountry","Home")" method="post" id="create_country_form">
                         <div class="col-md-12">
                             <label for="id_name" class="form-label">Şəhərlərin adları</label>
                             <input type="text" name="Name" class="form-control" id="id_city">
@@ -134,13 +150,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv et</button>
-                    <button type="button" class="btn btn-primary">Yadda saxla</button>
+                    <button type="submit" form="create_country_form" class="btn btn-primary">Yadda saxla</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Janr Add Modal -->
     <div class="modal fade" id="JanrAddModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -149,16 +164,16 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-left">
-                    <form class="row g-3" action="/" method="post">
+                    <form class="row g-3" action="@Url.Action("CreateJanre","Home")" method="post" id="create_janre_form">
                         <div class="col-md-12">
                             <label for="id_name" class="form-label">Janrın adı</label>
-                            <input type="text" name="Name" class="form-control" id="id_city">
+                            <input type="text" name="Name" class="form-control" id="id_janre">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ləğv et</button>
-                    <button type="button" class="btn btn-primary">Yadda saxla</button>
+                    <button type="submit" form="create_janre_form" class="btn btn-primary">Yadda saxla</button>
                 </div>
             </div>
         </div>

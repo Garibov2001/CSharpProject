@@ -148,7 +148,13 @@
     <Compile Include="Migrations\202103101550168_duration.designer.cs">
       <DependentUpon>202103101550168_duration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103121628159_film.cs" />
+    <Compile Include="Migrations\202103121628159_film.designer.cs">
+      <DependentUpon>202103121628159_film.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\FilmCreateViewModel.cs" />
+    <Compile Include="Models\FilmViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,10 +194,10 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\_ViewImports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103101550168_duration.resx">
       <DependentUpon>202103101550168_duration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103121628159_film.resx">
+      <DependentUpon>202103121628159_film.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
