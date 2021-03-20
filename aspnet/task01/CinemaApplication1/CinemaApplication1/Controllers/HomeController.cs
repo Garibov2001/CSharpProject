@@ -108,9 +108,9 @@ namespace CinemaApplication1.Controllers
         public ActionResult Detail(int id)
         {
             using (CinemaContext context = new CinemaContext())
-            {
+            {   
 
-                var film = context.Films.FirstOrDefault(x => x.FilmID == id);
+                var film = context.Films.Include("Janres").Include("Countries").FirstOrDefault(x => x.FilmID == id);
                 return View(film);
             }
         }

@@ -18,5 +18,12 @@ namespace CinemaApplication1.Entities
         public DbSet<Film> Films { get; set; }
         public DbSet<Janre> Janres { get; set; }
 
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Write Fluent API configurations here
+
+        }
+
     }
 }
