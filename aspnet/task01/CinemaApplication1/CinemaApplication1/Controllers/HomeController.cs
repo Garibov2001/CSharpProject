@@ -86,7 +86,7 @@ namespace CinemaApplication1.Controllers
 
 
         [HttpGet]
-        public ActionResult Index(FilmViewModel argData)
+        public ActionResult Index(FilmViewModel argData, string order_by = null)
         {
             FilmViewModel model = new FilmViewModel();
             using (CinemaContext context = new CinemaContext())
@@ -95,12 +95,25 @@ namespace CinemaApplication1.Controllers
                 {
                     model.Films = context.Films
                         .Where(x => x.PublicationDate >= argData.Start && x.PublicationDate <= argData.End).ToList();
+                    model.Start = argData.Start;
+                    model.End = argData.End;
                 }
                 else 
                 {
                     model.Films = context.Films.ToList();
-                    
                 }
+
+                //Filtering options
+
+                if (order_by == "name")
+                {
+                    model.Films = model.Films.OrderBy(x => x.Name).ToList();
+                }
+                else if (order_by == "date")
+                {
+                    model.Films = context.Films.OrderBy(x => x.PublicationDate).ToList();
+                }
+
                 model.Countries = context.Countries.ToList();
                 model.Janres = context.Janres.ToList();
             }
@@ -121,6 +134,21 @@ namespace CinemaApplication1.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            Film film = null;
+            using (CinemaContext context = new CinemaContext())
+            {
+                film = context.Films.FirstOrDefault(x => x.ID == id);
+                // Cascade True will remove FilmCountry and FilmJanres
+                context.Films.Remove(film);
+                context.SaveChanges();
+
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         public ActionResult Detail(int id)

@@ -47,11 +47,11 @@
                     <div class="d-flex justify-content-center">
                         <div class="form-group">
                             <label>Bashlama tarixi</label>
-                            <input type="date" name="Start" class="form-control" />
+                            <input type="date" name="Start" class="form-control" value="@(Model.Start?.ToString("yyyy-MM-dd"))" />
                         </div>
                         <div class="form-group">
                             <label>Bitme tarixi</label>
-                            <input type="date" name="End" class="form-control" />
+                            <input type="date" name="End" class="form-control" value="@(Model.End?.ToString("yyyy-MM-dd"))" />
                         </div>
                     </div>
                     <div class="form-group mt-4">
@@ -69,8 +69,12 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Publication Date</th>
+                        <th>
+                            <a href="@Url.Action("Index","Home",new { order_by = "name"})">Adi</a>
+                        </th>
+                        <th>
+                            <a href="@Url.Action("Index","Home",new { order_by = "date"})">Yayımlanma tarixi</a>
+                        </th>
                         <th scope="col">Duration</th>
                         <th scope="col">Link</th>
                         <th scope="col"></th>
@@ -83,14 +87,17 @@
 
                     @foreach (var film in Model.Films)
                     {
-                        <tr>
-                            <th scope="row">@row_counter</th>
-                            <td>@film.Name</td>
-                            <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
-                            <td>@film.Duration</td>
-                            <td><a href="@film.Link" target="_blank">Click</a></td>
-                            <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.ID })" >Etrafli</a></td>
-                        </tr>
+                    <tr>
+                        <th scope="row">@row_counter</th>
+                        <td>@film.Name</td>
+                        <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
+                        <td>@film.Duration</td>
+                        <td><a href="@film.Link" target="_blank">Click</a></td>
+                        <td>
+                            <a onclick="return confirm('Eminsinizmi?')" href="@Url.Action("Delete", "Home", new { id = film.ID})">Sil</a>
+                        </td>
+                        <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.ID })">Etrafli</a></td>
+                    </tr>
 
                         row_counter++;
                     }
