@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,11 +10,14 @@ namespace CinemaApplication1.Entities
     {
         public Country()
         {
-            this.Films = new HashSet<Film>();
+            FilmCountries = new HashSet<FilmCountry>();
         }
-        public int CountryID { get; set; }
+        [Key]
+        public int ID { get; set; }
+        [MinLength(3)]
+        [MaxLength(20)]
         public string Name { get; set; }
-        public virtual ICollection<Film> Films { get; set; }
+        public virtual ICollection<FilmCountry> FilmCountries { get; set; }
 
     }
 }

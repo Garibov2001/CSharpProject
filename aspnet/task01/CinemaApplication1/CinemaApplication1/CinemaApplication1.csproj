@@ -132,27 +132,18 @@
     <Compile Include="Entities\CinemaContext.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Film.cs" />
+    <Compile Include="Entities\FilmCountry.cs" />
+    <Compile Include="Entities\FilmJanre.cs" />
     <Compile Include="Entities\Janre.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202103101243033_first.cs" />
-    <Compile Include="Migrations\202103101243033_first.designer.cs">
-      <DependentUpon>202103101243033_first.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103101256480_relations.cs" />
-    <Compile Include="Migrations\202103101256480_relations.designer.cs">
-      <DependentUpon>202103101256480_relations.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103101550168_duration.cs" />
-    <Compile Include="Migrations\202103101550168_duration.designer.cs">
-      <DependentUpon>202103101550168_duration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202103121628159_film.cs" />
-    <Compile Include="Migrations\202103121628159_film.designer.cs">
-      <DependentUpon>202103121628159_film.cs</DependentUpon>
+    <Compile Include="Migrations\202103221331405_context-update.cs" />
+    <Compile Include="Migrations\202103221331405_context-update.designer.cs">
+      <DependentUpon>202103221331405_context-update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\FilmCreateViewModel.cs" />
     <Compile Include="Models\FilmViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,17 +204,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202103101243033_first.resx">
-      <DependentUpon>202103101243033_first.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103101256480_relations.resx">
-      <DependentUpon>202103101256480_relations.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103101550168_duration.resx">
-      <DependentUpon>202103101550168_duration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202103121628159_film.resx">
-      <DependentUpon>202103121628159_film.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103221331405_context-update.resx">
+      <DependentUpon>202103221331405_context-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

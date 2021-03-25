@@ -17,31 +17,39 @@ namespace CinemaApplication1.Controllers
         public ActionResult CreateFilm(FilmCreateViewModel film)
         {            
             using (CinemaContext context = new CinemaContext())
-            {
-                List<Country> countries = new List<Country>();
-                foreach (var item in film.Countries)
-                {
-                    countries.Add(context.Countries.Find(Convert.ToInt32(item)));
-                }
-
-                List<Janre> janres = new List<Janre>();
-                foreach (var item in film.Janres)
-                {
-                    janres.Add(context.Janres.Find(Convert.ToInt32(item)));
-                }
-
-
+            {               
                 Film newFilm = new Film
                 {
                     Name = film.Name,
                     PublicationDate = film.PublicationDate,
                     Link = film.Link,
                     Duration = film.Duration,
-                    Countries = countries,
-                    Janres = janres
                 };
 
-                context.Films.Add(newFilm);
+                var createdFilm = context.Films.Add(newFilm);
+
+                foreach (var country_id in film.Countries)
+                {
+                    var filmCountry = new FilmCountry
+                    {
+                        FilmId = createdFilm.ID,
+                        CountryId = Convert.ToInt32(country_id)
+                    };
+
+                    context.FilmCountries.Add(filmCountry);
+                }
+
+                foreach (var janre_id in film.Janres)
+                {
+                    var filmJanre = new FilmJanre
+                    {
+                        FilmId = createdFilm.ID,
+                        JanreId = Convert.ToInt32(janre_id)
+                    };
+
+                    context.FilmJanres.Add(filmJanre);
+                }
+
                 context.SaveChanges();
             }
 
@@ -78,18 +86,28 @@ namespace CinemaApplication1.Controllers
 
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(FilmViewModel argData)
         {
             FilmViewModel model = new FilmViewModel();
             using (CinemaContext context = new CinemaContext())
             {
-                model.Films = context.Films.ToList();
+                if (argData.Start != null && argData.End != null) 
+                {
+                    model.Films = context.Films
+                        .Where(x => x.PublicationDate >= argData.Start && x.PublicationDate <= argData.End).ToList();
+                }
+                else 
+                {
+                    model.Films = context.Films.ToList();
+                    
+                }
                 model.Countries = context.Countries.ToList();
                 model.Janres = context.Janres.ToList();
             }
 
             return View(model);
         }
+
 
         public ActionResult About()
         {
@@ -107,12 +125,20 @@ namespace CinemaApplication1.Controllers
 
         public ActionResult Detail(int id)
         {
+            DetailsViewModel details = null;
             using (CinemaContext context = new CinemaContext())
-            {   
-
-                var film = context.Films.Include("Janres").Include("Countries").FirstOrDefault(x => x.FilmID == id);
-                return View(film);
+            {
+                details = new DetailsViewModel
+                {
+                    Film = context.Films.Where(x => x.ID == id).FirstOrDefault(),
+                    FilmCountries = context.FilmCountries.Include("Country").Where(x => x.FilmId == id).ToList(),
+                    FilmJanres = context.FilmJanres.Include("Janre").Where(x => x.FilmId == id).ToList(),
+                };
             }
+
+            if (details == null) return HttpNotFound();
+            else return View(details);
+
         }
     }
 }

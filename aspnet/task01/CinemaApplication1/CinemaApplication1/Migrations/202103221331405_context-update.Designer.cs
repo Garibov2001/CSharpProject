@@ -7,13 +7,13 @@ namespace CinemaApplication1.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class duration : IMigrationMetadata
+    public sealed partial class contextupdate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(duration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(contextupdate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202103101550168_duration"; }
+            get { return "202103221331405_context-update"; }
         }
         
         string IMigrationMetadata.Source

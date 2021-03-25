@@ -1,5 +1,7 @@
 ﻿@using CinemaApplication1.Entities
-@model Film 
+@using CinemaApplication1.Models
+
+@model DetailsViewModel
 @{
     ViewBag.Title = "Home Page";
 }
@@ -13,56 +15,44 @@
 <nav class="mt-4" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="@Url.Action("Home","Index")">Filmlər</a></li>
-        <li class="breadcrumb-item">@Model.Name</li>
+        <li class="breadcrumb-item">@Model.Film.Name</li>
     </ol>
 </nav>
 
-<div class="card mt-4" >
+<div class="card mt-4">
     <div class="card-body">
-        <h5 class="card-title">@Model.Name</h5>
+        <h5 class="card-title">@Model.Film.Name</h5>
         @*<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>*@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item p-1">
             <div class="input-group">
                 <p>Filmin çıxma tarixi -</p>
-                <p> @Model.PublicationDate.Value.ToString("dd.MM.yyyy")</p>               
+                <p> @Model.Film.PublicationDate.Value.ToString("dd.MM.yyyy")</p>
             </div>
         </li>
         <li class="list-group-item p-1">
             <div class="input-group">
                 <p>Filmin muddeti -</p>
-                <p> @Model.Duration</p>                
+                <p> @Model.Film.Duration</p>
             </div>
         </li>
         <li class="list-group-item p-1">
             <div class="input-group">
                 <p class="mr-4 pr-4">Filmin linki : </p>
-                <p class="ml-4"><a href="@Model.Link" target="_blank">Clickle</a></p>                
+                <p class="ml-4"><a href="@Model.Film.Link" target="_blank">Clickle</a></p>
             </div>
         </li>
         <li class="list-group-item p-1">
             <div class="input-group">
-                <p class="mr-4 pr-4">Şəhərlərin adları : </p>
-                <p>
-                    @foreach (var item in Model.Countries)
-                    {
-                        string name = item.Name + ","; 
-                        @name
-                    }
-                </p>
-            </div>
+                <p class="mr-4 pr-4">Şəhərlərin adları  </p>
+                <p> @string.Join(" , ", Model.FilmCountries.Select(x => x.Country.Name).ToList())</p>
+            </div>  
         </li>
         <li class="list-group-item p-1">
             <div class="input-group">
                 <p class="mr-4 pr-4">Janrların adları : </p>
-                <p>
-                    @foreach (var item in Model.Janres)
-                    {
-                        string name = item.Name + ",";
-                        @name
-                    }
-                </p>                
+                <p> @string.Join(" , ", Model.FilmJanres.Select(x => x.Janre.Name).ToList())</p>
             </div>
         </li>
 

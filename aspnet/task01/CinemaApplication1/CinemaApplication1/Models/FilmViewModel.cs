@@ -11,5 +11,8 @@ namespace CinemaApplication1.Models
         public List<Film> Films { get; set; }
         public List<Country> Countries { get; set; }
         public List<Janre> Janres { get; set; }
+        public DateTime? Start { get; set; }
+        public DateTime? End { get; set; }
+
     }
 }

@@ -40,8 +40,29 @@
         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CityAddModal">Şəhər əlavə et</a>
         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#FilmAddModal">Film əlavə et</a>
         <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#JanrAddModal">Janr əlavə et</a>
+        <div class="d-flex justify-content-center mt-4">
+            <div class="col-md-6">
+                <h5 class="card-title">Filterle</h5>
+                <form class="form-inline " action="@Url.Action("Index","Home")" method="GET">
+                    <div class="d-flex justify-content-center">
+                        <div class="form-group">
+                            <label>Bashlama tarixi</label>
+                            <input type="date" name="Start" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Bitme tarixi</label>
+                            <input type="date" name="End" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-search">Axtar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
     </div>
+
     <div class="card m-2">
         <div class="card-body">
             <table class="table table-striped">
@@ -68,7 +89,7 @@
                             <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
                             <td>@film.Duration</td>
                             <td><a href="@film.Link" target="_blank">Click</a></td>
-                            <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.FilmID })" >Etrafli</a></td>
+                            <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.ID })" >Etrafli</a></td>
                         </tr>
 
                         row_counter++;
@@ -109,7 +130,7 @@
                             <select name="Countries" class="form-select" id="id_countries" multiple>
                                 @foreach (var country in Model.Countries)
                                 {
-                                    <option value="@country.CountryID">@country.Name</option>
+                                    <option value="@country.ID">@country.Name</option>
                                 }
                             </select>
                         </div>
@@ -118,7 +139,7 @@
                             <select name="Janres" class="form-select" id="id_janres" multiple>
                                 @foreach (var janre in Model.Janres)
                                 {
-                                    <option value="@janre.JanreID">@janre.Name</option>
+                                    <option value="@janre.ID">@janre.Name</option>
                                 }
                             </select>
                         </div>
