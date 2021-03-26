@@ -9,8 +9,8 @@ using System.Web.Mvc;
 namespace CinemaApplication1.Controllers
 {
     public class HomeController : Controller
-    { 
-        
+    {
+        private CinemaContext _context = new CinemaContext();
 
         //[ValidateAntiForgeryToken]
         [HttpPost]
@@ -53,7 +53,7 @@ namespace CinemaApplication1.Controllers
                 context.SaveChanges();
             }
 
-            TempData["film_success"] = true;
+            TempData["success"] = "Film ugurla yaradildi.";
             return RedirectToAction("Index", "Home");
         }
 
@@ -66,7 +66,7 @@ namespace CinemaApplication1.Controllers
                 context.SaveChanges();
             }
 
-            TempData["country_success"] = true;
+            TempData["success"] = "Seher ugurla yaradildi.";
             return RedirectToAction("Index","Home");
         }
 
@@ -79,7 +79,7 @@ namespace CinemaApplication1.Controllers
                 context.SaveChanges();
             }
 
-            TempData["janre_success"] = true;
+            TempData["success"] = "Janr ugurla yaradildi.";
             return RedirectToAction("Index", "Home");
         }
 
@@ -137,36 +137,116 @@ namespace CinemaApplication1.Controllers
         }
 
         [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            Film film = _context.Films.FirstOrDefault(x => x.ID == id);
+
+            if (film == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            FilmEditView edit_view = new FilmEditView
+            {
+                Film = film,
+                Countries = _context.Countries.ToList(),
+                Janres = _context.Janres.ToList()
+            };
+
+
+            return View(edit_view);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(FilmEditView user_data)
+        {
+            Film edit_film = new Film
+            {
+                ID = user_data.Film.ID,
+                Name = user_data.Film.Name,
+                PublicationDate = user_data.Film.PublicationDate,
+                Link = user_data.Film.Link,
+                Duration = user_data.Film.Duration
+            };
+
+            _context.Entry(edit_film).State = System.Data.Entity.EntityState.Modified;
+
+            // Remove all related filmcountry
+            _context.FilmCountries.Where(m => m.FilmId == edit_film.ID)
+                .ToList().ForEach(country => { _context.FilmCountries.Remove(country); _context.SaveChanges(); });
+
+            // Remove all related filmjanres
+            _context.FilmJanres.Where(m => m.FilmId == edit_film.ID)
+                .ToList().ForEach(janre => { _context.FilmJanres.Remove(janre); _context.SaveChanges(); });
+
+            // Add new related film country
+            foreach (var country_id in user_data.FilmCounties)
+            {
+                var filmCountry = new FilmCountry
+                {
+                    FilmId = edit_film.ID,
+                    CountryId = Convert.ToInt32(country_id)
+                };
+
+                _context.FilmCountries.Add(filmCountry);
+            }
+
+            // Add new related film janres
+            foreach (var janre_id in user_data.FilmJanres)
+            {
+                var filmJanre = new FilmJanre
+                {
+                    FilmId = edit_film.ID,
+                    JanreId = Convert.ToInt32(janre_id)
+                };
+
+                _context.FilmJanres.Add(filmJanre);
+            }
+
+            _context.SaveChanges();
+
+            TempData["success"] = "Film ugurla editlendi.";
+
+            if (Request["_continue"] != null)
+            {
+                return RedirectToAction("Edit","Home", new { id = user_data.Film.ID});
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             Film film = null;
-            using (CinemaContext context = new CinemaContext())
-            {
-                film = context.Films.FirstOrDefault(x => x.ID == id);
-                // Cascade True will remove FilmCountry and FilmJanres
-                context.Films.Remove(film);
-                context.SaveChanges();
+            film = _context.Films.FirstOrDefault(x => x.ID == id);
+            // Cascade True will remove FilmCountry and FilmJanres
+            _context.Films.Remove(film);
+            _context.SaveChanges();
+            TempData["success"] = "Film ugurla silindi.";
 
-                return RedirectToAction("Index", "Home");
-            }
+            return RedirectToAction("Index", "Home");            
         }
 
         public ActionResult Detail(int id)
         {
-            DetailsViewModel details = null;
-            using (CinemaContext context = new CinemaContext())
-            {
-                details = new DetailsViewModel
-                {
-                    Film = context.Films.Where(x => x.ID == id).FirstOrDefault(),
-                    FilmCountries = context.FilmCountries.Include("Country").Where(x => x.FilmId == id).ToList(),
-                    FilmJanres = context.FilmJanres.Include("Janre").Where(x => x.FilmId == id).ToList(),
-                };
-            }
+
+            var details = _context.Films.Where(x => x.ID == id).FirstOrDefault();
 
             if (details == null) return HttpNotFound();
             else return View(details);
 
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            // Release the db resources
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

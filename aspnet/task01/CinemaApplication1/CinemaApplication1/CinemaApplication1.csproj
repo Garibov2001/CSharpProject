@@ -127,6 +127,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\utily.cs" />
     <Compile Include="Entities\CinemaContext.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\FilmCreateViewModel.cs" />
+    <Compile Include="Models\FilmEditView.cs" />
     <Compile Include="Models\FilmViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -186,6 +188,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\_ViewImports.cshtml" />
+    <Content Include="Views\Home\Edit.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
