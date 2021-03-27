@@ -88,6 +88,11 @@ namespace CinemaApplication1.Controllers
         [HttpGet]
         public ActionResult Index(FilmViewModel argData, string order_by = null)
         {
+            if (Session["authenticated"] == null)
+            {
+                return RedirectToAction("Login", "Account");
+
+            }
             FilmViewModel model = new FilmViewModel();
             using (CinemaContext context = new CinemaContext())
             {

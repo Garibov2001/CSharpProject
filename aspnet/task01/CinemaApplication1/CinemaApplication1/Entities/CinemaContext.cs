@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CinemaApplication1.Entities.Account;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,9 +17,10 @@ namespace CinemaApplication1.Entities
 
         public virtual DbSet<Country> Countries { get; set; }
         public virtual DbSet<Film> Films { get; set; }
-        public DbSet<Janre> Janres { get; set; }
-        public DbSet<FilmCountry> FilmCountries { get; set; }
-        public DbSet<FilmJanre> FilmJanres { get; set; }
+        public virtual DbSet<Janre> Janres { get; set; }
+        public virtual DbSet<FilmCountry> FilmCountries { get; set; }
+        public virtual DbSet<FilmJanre> FilmJanres { get; set; }
+        public virtual DbSet<User> Users { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -130,6 +130,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Core\utily.cs" />
+    <Compile Include="Entities\Account\User.cs" />
     <Compile Include="Entities\CinemaContext.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\Film.cs" />
@@ -142,6 +143,10 @@
     <Compile Include="Migrations\202103221331405_context-update.cs" />
     <Compile Include="Migrations\202103221331405_context-update.designer.cs">
       <DependentUpon>202103221331405_context-update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103261717298_user.cs" />
+    <Compile Include="Migrations\202103261717298_user.designer.cs">
+      <DependentUpon>202103261717298_user.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
@@ -196,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Account\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -213,6 +219,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103221331405_context-update.resx">
       <DependentUpon>202103221331405_context-update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103261717298_user.resx">
+      <DependentUpon>202103261717298_user.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

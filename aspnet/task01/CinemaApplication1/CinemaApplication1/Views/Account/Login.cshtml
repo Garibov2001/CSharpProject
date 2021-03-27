@@ -56,26 +56,32 @@
 <body class="text-center">
 
     <main class="form-signin">
-        <form>
+        <form action="@Url.Action("Login","Account")" method="POST">
             <img class="mb-4" src="http://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+            <h1 class="h3 mb-3 fw-normal">Daxil olun</h1>
+            @if (@ViewBag.Error != null)
+            {
+                <div class="alert alert-danger text-nowrap">
+                    @ViewBag.Error
+                </div>
+            }
             <div class="form-floating">
-                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
+                <input name="Email" type="email" class="form-control">
+                <label>Email </label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
+                <input name="Password" type="password" class="form-control">
+                <label>Şifrə</label>
             </div>
 
             <div class="checkbox mb-3">
                 <label>
-                    <input type="checkbox" value="remember-me"> Remember me
+                    <input type="checkbox" value="remember-me"> Yadda saxla
                 </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+            <button class="w-100 btn btn-lg btn-primary mb-2" type="submit">Daxil ol</button>
+            <a class="w-100 btn btn-lg btn-primary" href="@Url.Action("Register","Account")">Qeydiyyatdan keç </a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–@DateTime.Now.Year</p>
         </form>
     </main>
 

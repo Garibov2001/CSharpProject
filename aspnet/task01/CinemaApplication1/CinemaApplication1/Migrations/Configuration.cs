@@ -36,6 +36,16 @@
                     Name = "Pakistan"
                 }
             );
+
+            context.Users.AddOrUpdate(x => x.Email,
+                new Entities.Account.User
+                {
+                    Name = "Eldar",
+                    LastName = "Zeynalli",
+                    Email = "maho@gmail.com",
+                    Password = "AO4Q7Spu4Uik5Q31j+mSbjxZh1FxQXouqW+uOHmx1on0gkfBvg/qiR0bbFSducv5tw==",
+                }  
+            );
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
