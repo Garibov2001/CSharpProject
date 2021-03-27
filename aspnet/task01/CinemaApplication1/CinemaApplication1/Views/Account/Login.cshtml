@@ -65,6 +65,12 @@
                     @ViewBag.Error
                 </div>
             }
+            @if (TempData["success"] != null)
+            {
+                <div class="alert alert-success text-nowrap">
+                    @TempData["success"]
+                </div>
+            }
             <div class="form-floating">
                 <input name="Email" type="email" class="form-control">
                 <label>Email </label>

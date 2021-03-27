@@ -18,44 +18,42 @@ namespace CinemaApplication1.Controllers
         //[ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult CreateFilm(FilmCreateViewModel film)
-        {            
-            using (CinemaContext context = new CinemaContext())
-            {               
-                Film newFilm = new Film
+        {                        
+            Film newFilm = new Film
+            {
+                Name = film.Name,
+                PublicationDate = film.PublicationDate,
+                Link = film.Link,
+                Duration = film.Duration,
+                User = Session["user"] as User,
+            };
+
+            var createdFilm = _context.Films.Add(newFilm);
+
+            foreach (var country_id in film.Countries)
+            {
+                var filmCountry = new FilmCountry
                 {
-                    Name = film.Name,
-                    PublicationDate = film.PublicationDate,
-                    Link = film.Link,
-                    Duration = film.Duration,
-                    User = Session["user"] as User,
+                    FilmId = createdFilm.ID,
+                    CountryId = Convert.ToInt32(country_id)
                 };
 
-                var createdFilm = context.Films.Add(newFilm);
-
-                foreach (var country_id in film.Countries)
-                {
-                    var filmCountry = new FilmCountry
-                    {
-                        FilmId = createdFilm.ID,
-                        CountryId = Convert.ToInt32(country_id)
-                    };
-
-                    context.FilmCountries.Add(filmCountry);
-                }
-
-                foreach (var janre_id in film.Janres)
-                {
-                    var filmJanre = new FilmJanre
-                    {
-                        FilmId = createdFilm.ID,
-                        JanreId = Convert.ToInt32(janre_id)
-                    };
-
-                    context.FilmJanres.Add(filmJanre);
-                }
-
-                context.SaveChanges();
+                _context.FilmCountries.Add(filmCountry);
             }
+
+            foreach (var janre_id in film.Janres)
+            {
+                var filmJanre = new FilmJanre
+                {
+                    FilmId = createdFilm.ID,
+                    JanreId = Convert.ToInt32(janre_id)
+                };
+
+                _context.FilmJanres.Add(filmJanre);
+            }
+
+            _context.SaveChanges();
+            
 
             TempData["success"] = "Film ugurla yaradildi.";
             return RedirectToAction("Index", "Home");
@@ -64,11 +62,9 @@ namespace CinemaApplication1.Controllers
         [HttpPost]
         public ActionResult CreateCountry(Country country)
         {
-            using (CinemaContext context = new CinemaContext())
-            {
-                context.Countries.Add(country);
-                context.SaveChanges();
-            }
+ 
+            _context.Countries.Add(country);
+            _context.SaveChanges();
 
             TempData["success"] = "Seher ugurla yaradildi.";
             return RedirectToAction("Index","Home");
@@ -77,11 +73,8 @@ namespace CinemaApplication1.Controllers
         [HttpPost]
         public ActionResult CreateJanre(Janre janre)
         {
-            using (CinemaContext context = new CinemaContext())
-            {
-                context.Janres.Add(janre);
-                context.SaveChanges();
-            }
+            _context.Janres.Add(janre);
+            _context.SaveChanges();            
 
             TempData["success"] = "Janr ugurla yaradildi.";
             return RedirectToAction("Index", "Home");

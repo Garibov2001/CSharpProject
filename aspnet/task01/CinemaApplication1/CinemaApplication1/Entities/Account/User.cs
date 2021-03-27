@@ -15,16 +15,15 @@ namespace CinemaApplication1.Entities.Account
         public string Name { get; set; }
         [MinLength(3), MaxLength(30)]
         public string LastName { get; set; }
+
         public string Email { get; set; }
         public string Password { get; set; }
 
 
         public string GetFullName()
         {
-            return $"{Name} {LastName}";
+            return $"{Name} {LastName}";            
         }
-
-
 
     }
 }

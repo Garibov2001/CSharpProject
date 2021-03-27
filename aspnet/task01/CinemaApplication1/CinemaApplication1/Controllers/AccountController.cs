@@ -54,6 +54,26 @@ namespace CinemaApplication1.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Register(User user_data)
+        {
+            if (_context.Users.FirstOrDefault(x => x.Email == user_data.Email) != null)
+            {
+                ViewBag.Error = "Daxil etdiyiniz email artiq istifade olunub";
+                return View();
+
+            }
+
+            user_data.Password = Crypto.HashPassword(user_data.Password);
+
+            _context.Users.Add(user_data);
+            _context.SaveChanges();
+
+            TempData["success"] = "Hesab ugurla yaradildi.";
+
+            return RedirectToAction("Login", "Account");
+        }
+
         [HttpGet]
         public ActionResult Logout()
         {
