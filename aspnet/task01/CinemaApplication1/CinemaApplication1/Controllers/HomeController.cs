@@ -9,12 +9,13 @@ using System.Web.Mvc;
 
 namespace CinemaApplication1.Controllers
 {
+    [LoginRequired]
     public class HomeController : Controller
     {
         private CinemaContext _context = new CinemaContext();
 
         //[ValidateAntiForgeryToken]
-        [HttpPost, LoginRequired]
+        [HttpPost]
         public ActionResult CreateFilm(FilmCreateViewModel film)
         {            
             using (CinemaContext context = new CinemaContext())
@@ -58,7 +59,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost, LoginRequired]
+        [HttpPost]
         public ActionResult CreateCountry(Country country)
         {
             using (CinemaContext context = new CinemaContext())
@@ -71,7 +72,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        [HttpPost, LoginRequired]
+        [HttpPost]
         public ActionResult CreateJanre(Janre janre)
         {
             using (CinemaContext context = new CinemaContext())
@@ -86,7 +87,7 @@ namespace CinemaApplication1.Controllers
 
 
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult Index(FilmViewModel argData, string order_by = null)
         {
             FilmViewModel model = new FilmViewModel();
@@ -122,7 +123,7 @@ namespace CinemaApplication1.Controllers
             return View(model);
         }
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -130,7 +131,7 @@ namespace CinemaApplication1.Controllers
             return View();
         }
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -138,7 +139,7 @@ namespace CinemaApplication1.Controllers
             return View();
         }
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult Edit(int id)
         {
             Film film = _context.Films.FirstOrDefault(x => x.ID == id);
@@ -160,7 +161,7 @@ namespace CinemaApplication1.Controllers
             return View(edit_view);
         }
 
-        [HttpPost, LoginRequired]
+        [HttpPost]
         public ActionResult Edit(FilmEditView user_data)
         {
             Film edit_film = new Film
@@ -218,7 +219,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult Delete(int id)
         {
             Film film = null;
@@ -231,7 +232,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");            
         }
 
-        [HttpGet, LoginRequired]
+        [HttpGet]
         public ActionResult Detail(int id)
         {
 
