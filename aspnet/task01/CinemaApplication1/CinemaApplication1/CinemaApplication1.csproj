@@ -149,6 +149,14 @@
     <Compile Include="Migrations\202103261717298_user.designer.cs">
       <DependentUpon>202103261717298_user.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103271937087_user added to film.cs" />
+    <Compile Include="Migrations\202103271937087_user added to film.designer.cs">
+      <DependentUpon>202103271937087_user added to film.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103271940178_user_updated.cs" />
+    <Compile Include="Migrations\202103271940178_user_updated.designer.cs">
+      <DependentUpon>202103271940178_user_updated.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DetailsViewModel.cs" />
     <Compile Include="Models\FilmCreateViewModel.cs" />
@@ -223,6 +231,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103261717298_user.resx">
       <DependentUpon>202103261717298_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103271937087_user added to film.resx">
+      <DependentUpon>202103271937087_user added to film.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103271940178_user_updated.resx">
+      <DependentUpon>202103271940178_user_updated.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

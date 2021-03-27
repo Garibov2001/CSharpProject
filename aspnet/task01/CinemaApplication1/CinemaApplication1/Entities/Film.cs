@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CinemaApplication1.Entities.Account;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace CinemaApplication1.Entities
         public DateTime? PublicationDate { get; set; }
         public int Duration { get; set; }
         public string Link { get; set; }
+        public int UserID { get; set; }
+        public virtual User User { get; set; }
 
         public virtual ICollection<FilmCountry> FilmCountries { get; set; }
         public virtual ICollection<FilmJanre> FilmJanres { get; set; }

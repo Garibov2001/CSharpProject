@@ -62,6 +62,7 @@
                         <th>
                             <a href="@Url.Action("Index","Home",new { order_by = "date"})">Yayımlanma tarixi</a>
                         </th>
+                        <th scope="col">Filmi əlavə edən</th>
                         <th scope="col">Duration</th>
                         <th scope="col">Link</th>
                         <th scope="col"></th>
@@ -76,21 +77,23 @@
 
                     @foreach (var film in Model.Films)
                     {
-                        <tr>
-                            <th scope="row">@row_counter</th>
-                            <td>@film.Name</td>
-                            <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
-                            <td>@film.Duration</td>
-                            <td><a href="@film.Link" target="_blank"><i style="font-size: 1.4rem;" class="bi bi-youtube"></i></a></td>
-                            <td>
-                                
-                                <a href="@Url.Action("Edit", "Home", new { id = film.ID})"><i style="font-size: 1.4rem;" class="bi bi-pencil-fill"></i></a>
-                            </td>
-                            <td>
-                                <a onclick="return confirm('Eminsinizmi?')" href="@Url.Action("Delete", "Home", new { id = film.ID})"><i style="font-size: 1.4rem;" class="bi bi-trash"></i></a>
-                            </td>
-                            <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.ID })">Etrafli</a></td>
-                        </tr>
+                    <tr>
+                        <th scope="row">@row_counter</th>
+                        <td>@film.Name</td>
+                        <td>@film.PublicationDate.Value.ToString("dd.MM.yyyy")</td>
+                        <td>@film.User.Name @film.User.LastName</td>
+
+                        <td>@film.Duration</td>
+                        <td><a href="@film.Link" target="_blank"><i style="font-size: 1.4rem;" class="bi bi-youtube"></i></a></td>
+                        <td>
+
+                            <a href="@Url.Action("Edit", "Home", new { id = film.ID})"><i style="font-size: 1.4rem;" class="bi bi-pencil-fill"></i></a>
+                        </td>
+                        <td>
+                            <a onclick="return confirm('Eminsinizmi?')" href="@Url.Action("Delete", "Home", new { id = film.ID})"><i style="font-size: 1.4rem;" class="bi bi-trash"></i></a>
+                        </td>
+                        <td><a target="_blank" href="@Url.Action("Detail","Home", new { id = film.ID })">Etrafli</a></td>
+                    </tr>
 
                         row_counter++;
                     }

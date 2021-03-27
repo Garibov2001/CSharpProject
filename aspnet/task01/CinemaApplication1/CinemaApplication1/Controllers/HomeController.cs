@@ -1,4 +1,5 @@
 ﻿using CinemaApplication1.Entities;
+using CinemaApplication1.Entities.Account;
 using CinemaApplication1.Filters;
 using CinemaApplication1.Models;
 using System;
@@ -26,6 +27,7 @@ namespace CinemaApplication1.Controllers
                     PublicationDate = film.PublicationDate,
                     Link = film.Link,
                     Duration = film.Duration,
+                    User = Session["user"] as User,
                 };
 
                 var createdFilm = context.Films.Add(newFilm);
@@ -91,34 +93,33 @@ namespace CinemaApplication1.Controllers
         public ActionResult Index(FilmViewModel argData, string order_by = null)
         {
             FilmViewModel model = new FilmViewModel();
-            using (CinemaContext context = new CinemaContext())
+
+            if (argData.Start != null && argData.End != null) 
             {
-                if (argData.Start != null && argData.End != null) 
-                {
-                    model.Films = context.Films
-                        .Where(x => x.PublicationDate >= argData.Start && x.PublicationDate <= argData.End).ToList();
-                    model.Start = argData.Start;
-                    model.End = argData.End;
-                }
-                else 
-                {
-                    model.Films = context.Films.ToList();
-                }
-
-                //Filtering options
-
-                if (order_by == "name")
-                {
-                    model.Films = model.Films.OrderBy(x => x.Name).ToList();
-                }
-                else if (order_by == "date")
-                {
-                    model.Films = context.Films.OrderBy(x => x.PublicationDate).ToList();
-                }
-
-                model.Countries = context.Countries.ToList();
-                model.Janres = context.Janres.ToList();
+                model.Films = _context.Films
+                    .Where(x => x.PublicationDate >= argData.Start && x.PublicationDate <= argData.End).ToList();
+                model.Start = argData.Start;
+                model.End = argData.End;
             }
+            else 
+            {
+                model.Films = _context.Films.ToList();
+            }
+
+            //Filtering options
+
+            if (order_by == "name")
+            {
+                model.Films = model.Films.OrderBy(x => x.Name).ToList();
+            }
+            else if (order_by == "date")
+            {
+                model.Films = _context.Films.OrderBy(x => x.PublicationDate).ToList();
+            }
+
+            model.Countries = _context.Countries.ToList();
+            model.Janres = _context.Janres.ToList();
+            
 
             return View(model);
         }
