@@ -16,7 +16,7 @@ namespace CinemaApplication1.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if (Session["authenticated"] != null)
+            if (Session["authorization"] != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -33,7 +33,8 @@ namespace CinemaApplication1.Controllers
             {
                 if (Crypto.VerifyHashedPassword(user.Password, model.Password))
                 {
-                    Session["authenticated"] = true;
+                    Session["authorization"] = true;
+                    Session["user"] = user;
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -46,7 +47,7 @@ namespace CinemaApplication1.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            if (Session["authenticated"] != null)
+            if (Session["authorization"] != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -56,10 +57,14 @@ namespace CinemaApplication1.Controllers
         [HttpGet]
         public ActionResult Logout()
         {
-            Session.Remove("authenticated");
+            Session.Remove("authorization");
             return RedirectToAction("Login", "Account");
         }
 
+        //public ActionResult Dashboard()
+        //{
+
+        //}
         protected override void Dispose(bool disposing)
         {
             // Release the db resources

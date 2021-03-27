@@ -137,6 +137,7 @@
     <Compile Include="Entities\FilmCountry.cs" />
     <Compile Include="Entities\FilmJanre.cs" />
     <Compile Include="Entities\Janre.cs" />
+    <Compile Include="Filters\LoginRequired.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

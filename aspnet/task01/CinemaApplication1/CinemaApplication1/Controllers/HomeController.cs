@@ -1,4 +1,5 @@
 ﻿using CinemaApplication1.Entities;
+using CinemaApplication1.Filters;
 using CinemaApplication1.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace CinemaApplication1.Controllers
         private CinemaContext _context = new CinemaContext();
 
         //[ValidateAntiForgeryToken]
-        [HttpPost]
+        [HttpPost, LoginRequired]
         public ActionResult CreateFilm(FilmCreateViewModel film)
         {            
             using (CinemaContext context = new CinemaContext())
@@ -57,7 +58,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpPost]
+        [HttpPost, LoginRequired]
         public ActionResult CreateCountry(Country country)
         {
             using (CinemaContext context = new CinemaContext())
@@ -70,7 +71,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index","Home");
         }
 
-        [HttpPost]
+        [HttpPost, LoginRequired]
         public ActionResult CreateJanre(Janre janre)
         {
             using (CinemaContext context = new CinemaContext())
@@ -85,14 +86,9 @@ namespace CinemaApplication1.Controllers
 
 
 
-        [HttpGet]
+        [HttpGet, LoginRequired]
         public ActionResult Index(FilmViewModel argData, string order_by = null)
         {
-            if (Session["authenticated"] == null)
-            {
-                return RedirectToAction("Login", "Account");
-
-            }
             FilmViewModel model = new FilmViewModel();
             using (CinemaContext context = new CinemaContext())
             {
@@ -126,7 +122,7 @@ namespace CinemaApplication1.Controllers
             return View(model);
         }
 
-
+        [HttpGet, LoginRequired]
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -134,6 +130,7 @@ namespace CinemaApplication1.Controllers
             return View();
         }
 
+        [HttpGet, LoginRequired]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
@@ -141,7 +138,7 @@ namespace CinemaApplication1.Controllers
             return View();
         }
 
-        [HttpGet]
+        [HttpGet, LoginRequired]
         public ActionResult Edit(int id)
         {
             Film film = _context.Films.FirstOrDefault(x => x.ID == id);
@@ -163,7 +160,7 @@ namespace CinemaApplication1.Controllers
             return View(edit_view);
         }
 
-        [HttpPost]
+        [HttpPost, LoginRequired]
         public ActionResult Edit(FilmEditView user_data)
         {
             Film edit_film = new Film
@@ -221,7 +218,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [HttpGet]
+        [HttpGet, LoginRequired]
         public ActionResult Delete(int id)
         {
             Film film = null;
@@ -234,6 +231,7 @@ namespace CinemaApplication1.Controllers
             return RedirectToAction("Index", "Home");            
         }
 
+        [HttpGet, LoginRequired]
         public ActionResult Detail(int id)
         {
 
